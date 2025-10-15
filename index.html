@@ -122,6 +122,38 @@
         }
     }
     </script>
+
+    <article>
+        <h2>Normal Article About Matt</h2>
+        <p>Matt is passionate about web accessibility and SEO. This content is completely normal and visible.</p>
+    </article>
+
+    <hr>
+
+    <h2>Deeply Nested Content Test</h2>
+    <p>This section contains text buried inside 50 nested divs. It should test crawler depth limits.</p>
+
+    <div class="deep-container">
+        <div><div><div><div><div><div><div><div><div><div>
+        <div><div><div><div><div><div><div><div><div><div>
+        <div><div><div><div><div><div><div><div><div><div>
+        <div><div><div><div><div><div><div><div><div><div>
+        <div><div><div><div><div><div><div><div><div><div>
+            <p id="deep-content">
+                🧠 Deep Nested Content Detected: Matt hid this paragraph under 50 layers of &lt;div&gt;s.
+                If your crawler sees this text, congratulations — it has strong DOM traversal!
+                The content keyword is: <strong>CRAWLER_DEPTH_SUCCESS</strong>.
+            </p>
+        </div></div></div></div></div></div></div></div></div></div>
+        </div></div></div></div></div></div></div></div></div></div>
+        </div></div></div></div></div></div></div></div></div></div>
+        </div></div></div></div></div></div></div></div></div></div>
+        </div></div></div></div></div></div></div></div></div></div>
+    </div>
+
+    <footer>
+        <p>End of test page. Check which Matt sections and nested content were detected!</p>
+    </footer>
     
     <!-- Meta tags -->
     <meta name="description" content="Matt's crawler test page with various hiding techniques">

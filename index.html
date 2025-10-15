@@ -1,0 +1,179 @@
+<!-- ✅ Pure CSS Tabs (instant switch, no scrolling) -->
+<section class="tabs" aria-label="Content tabs">
+  <!-- Radios (hidden) -->
+  <input class="sr-only" type="radio" name="tabs" id="t1" checked>
+  <input class="sr-only" type="radio" name="tabs" id="t2">
+  <input class="sr-only" type="radio" name="tabs" id="t3">
+  <input class="sr-only" type="radio" name="tabs" id="t4">
+
+  <!-- Tab headers -->
+  <div class="tablist" role="tablist" aria-label="Sections">
+    <label class="tab" for="t1" id="tab1" role="tab" tabindex="0">Overview</label>
+    <label class="tab" for="t2" id="tab2" role="tab" tabindex="0">Specs</label>
+    <label class="tab" for="t3" id="tab3" role="tab" tabindex="0">Gallery</label>
+    <label class="tab" for="t4" id="tab4" role="tab" tabindex="0">FAQ</label>
+    <span class="active-pill" aria-hidden="true"></span>
+  </div>
+
+  <!-- Panels (only one is displayed) -->
+  <div class="panes">
+    <section id="p1" class="pane" role="tabpanel" aria-labelledby="tab1">
+      <h2>Overview</h2>
+      <p>Instant tab switch. No horizontal track; we simply show/hide panels.</p>
+      <ul>
+        <li>Keyboard: focus a tab, press <kbd>Space</kbd> or <kbd>Enter</kbd></li>
+        <li>Accessible structure with roles</li>
+        <li>Pure CSS, no JS</li>
+      </ul>
+    </section>
+
+    <section id="p2" class="pane" role="tabpanel" aria-labelledby="tab2">
+      <h2>Specs</h2>
+      <ul class="cols">
+        <li><strong>Behavior:</strong> display toggle</li>
+        <li><strong>Animation:</strong> optional fade</li>
+        <li><strong>Frameworks:</strong> none</li>
+        <li><strong>A11y:</strong> radios + labels</li>
+      </ul>
+    </section>
+
+    <section id="p3" class="pane" role="tabpanel" aria-labelledby="tab3">
+      <h2>Gallery</h2>
+      <div class="grid">
+        <div class="card">📷 Image A</div>
+        <div class="card">📷 Image B</div>
+        <div class="card">📷 Image C</div>
+        <div class="card">📷 Image D</div>
+      </div>
+    </section>
+
+    <section id="p4" class="pane" role="tabpanel" aria-labelledby="tab4">
+      <h2>FAQ</h2>
+      <details open>
+        <summary>Does this use JavaScript?</summary>
+        <p>Nope—radio buttons + CSS selectors do the switching.</p>
+      </details>
+      <details>
+        <summary>Can I deep link to a tab?</summary>
+        <p>With JS, yes. Pure CSS can’t read the URL hash to check radios.</p>
+      </details>
+    </section>
+  </div>
+</section>
+
+<style>
+  :root{
+    --bg: #0b1224;
+    --panel: #0f172a;
+    --muted: #9aa3b2;
+    --text: #e6eafb;
+    --accent: #60a5fa;
+    --ring: #93c5fd;
+    --tab-h: 48px;
+    --radius: 14px;
+    --shadow: 0 12px 30px rgba(0,0,0,.25);
+    --fade: 160ms;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: linear-gradient(180deg, var(--bg), #0a0f1c 35%, var(--bg));
+    color: var(--text); font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+    min-height: 100vh; display: grid; place-items: start center; padding: 3rem 1rem;
+  }
+
+  .tabs {
+    width: min(980px, 100%);
+    background: rgba(17, 24, 39, .85);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: clip;
+  }
+
+  /* Visually-hidden radios (still focusable) */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
+    white-space: nowrap; clip: rect(0 0 0 0); clip-path: inset(50%);
+  }
+
+  /* TAB LIST */
+  .tablist {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    padding: 6px;
+    background: rgba(255,255,255,.03);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .tab {
+    display: grid; place-items: center;
+    height: var(--tab-h);
+    cursor: pointer; user-select: none;
+    color: var(--muted);
+    border-radius: 10px;
+    transition: color .15s ease, background .15s ease;
+    outline-offset: 3px;
+  }
+  .tab:hover { background: rgba(255,255,255,.05); color: #fff; }
+  .tab:focus-visible { outline: 2px solid var(--ring); }
+  /* Active pill behind the selected tab */
+  .tablist::after {
+    content: "";
+    position: absolute; top: 6px; left: 6px; width: calc(25% - 3px); height: var(--tab-h);
+    background: rgba(96,165,250,.12);
+    border: 1px solid rgba(96,165,250,.25);
+    border-radius: 10px;
+    transition: transform var(--fade) ease;
+    pointer-events: none;
+  }
+
+  /* PANES: only one visible; optional fade */
+  .panes { position: relative; }
+  .pane {
+    display: none;
+    padding: 1.25rem clamp(1rem, 3vw, 1.5rem) 1.75rem;
+    animation: fadeIn var(--fade) ease;
+  }
+  .pane p { color: var(--muted); }
+  @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+
+  .cols {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .5rem 1rem;
+    padding-left: 1rem;
+  }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  .card { padding: 1.2rem; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; background: rgba(255,255,255,.03); }
+  details summary { cursor: pointer; }
+  details summary::-webkit-details-marker { display: none; }
+  details { border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: .75rem 1rem; background: rgba(255,255,255,.03); margin-bottom: .6rem; }
+  details[open] { background: rgba(255,255,255,.05); }
+
+  /* ---------- STATE: which tab is checked? ---------- */
+  /* Show the matching panel */
+  #t1:checked ~ .panes #p1 { display: block; }
+  #t2:checked ~ .panes #p2 { display: block; }
+  #t3:checked ~ .panes #p3 { display: block; }
+  #t4:checked ~ .panes #p4 { display: block; }
+
+  /* Highlight active tab text */
+  #t1:checked ~ .tablist label[for="t1"],
+  #t2:checked ~ .tablist label[for="t2"],
+  #t3:checked ~ .tablist label[for="t3"],
+  #t4:checked ~ .tablist label[for="t4"] {
+    color: #fff;
+  }
+
+  /* Move the active pill under the selected tab */
+  #t1:checked ~ .tablist::after { transform: translateX(0%); }
+  #t2:checked ~ .tablist::after { transform: translateX(100%); }
+  #t3:checked ~ .tablist::after { transform: translateX(200%); }
+  #t4:checked ~ .tablist::after { transform: translateX(300%); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    .tab { font-size: .95rem; }
+  }
+</style>
